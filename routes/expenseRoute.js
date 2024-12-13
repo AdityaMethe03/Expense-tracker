@@ -5,5 +5,6 @@ const router = express.Router();
 
 router.route("/")
     .get(expenseController.getAllExpenses)
+    .post(expenseController.createExpense);
 
 module.exports = router;

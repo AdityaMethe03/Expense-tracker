@@ -6,6 +6,7 @@ const xss = require('xss-clean');
 const cookieParser = require('cookie-parser');
 
 const expenseRouter = require('./routes/expenseRoute')
+const userRouter = require('./routes/userRoute')
 
 const app = express();
 
@@ -28,5 +29,16 @@ app.use(mongoSanitize());
 app.use(xss());
 
 app.use("/api/v1/expenses", expenseRouter);
+app.use("/api/v1/users", userRouter);
 
 module.exports = app;
+
+// Get expenses
+// Add expenses
+// Delete expenses
+// Edit expenses
+// Get monthly expenses
+// Get a year's expense summary
+// Get a month's expense summary
+// Get a day's expense summary
+// Get total expense summary

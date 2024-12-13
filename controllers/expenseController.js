@@ -1,9 +1,9 @@
+const Expense = require('../models/expenseModel');
+// const catchAsync = require('../utils/catchAsync');
+const factory = require('./handlerFactory');
 
-exports.getAllExpenses = (req, res, next) => {
-    res.status(200).json({
-        status: 'success',
-        data: {
-            msg: "All Expenses"
-        }
-    })
-}
+exports.getAllExpenses = factory.getAll(Expense);
+
+exports.createExpense = factory.createOne(Expense);
+
+exports.getTour = factory.getOne(Expense);
