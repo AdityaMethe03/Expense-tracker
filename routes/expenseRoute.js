@@ -7,4 +7,9 @@ router.route("/")
     .get(expenseController.getAllExpenses)
     .post(expenseController.createExpense);
 
+router.route("/:id")
+    .get(expenseController.getExpense)
+    .post(expenseController.updateExpense)
+    .delete(expenseController.deleteExpense);
+
 module.exports = router;
