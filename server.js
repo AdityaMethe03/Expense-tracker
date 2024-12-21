@@ -29,16 +29,16 @@ mongoose
 // })
 
 // const testUser = new User({
-//     name: 'John Doe',
-//     email: 'johndoe@example.com',
-//     password: 'securePassword123',
-//     passwordConfirm: 'securePassword123',
+//     name: 'Clark Kent',
+//     email: 'clarkkent@example.com',
+//     password: 'test1234',
+//     passwordConfirm: 'test1234',
 //     role: 'user',
 //     photo: 'default.jpg',
 //     active: true
 // });
 
-// testExpense.save().then(doc => {
+// testUser.save().then(doc => {
 //     console.log(doc);
 // }).catch(err => {
 //     console.log("Error: ", err)
