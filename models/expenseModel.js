@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
 const expenseSchema = new mongoose.Schema({
-    userId: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: [true, "User ID is required for the expense."],
+        required: [true, "User is required for the expense."],
     },
     type: {
         type: String,
@@ -13,15 +13,17 @@ const expenseSchema = new mongoose.Schema({
     },
     amount: {
         type: Number,
-        required: [true, "Expense must include an amount."],
+        required: [true, "Amount is required for the expense."],
+        min: [0, "Amount must be a positive number."],
     },
     category: {
         type: String,
-        required: [true, "Expense must have a category."],
+        required: [true, "Please specify the category for this expense."],
+        trim: true,
     },
     date: {
         type: Date,
-        required: [true, "Expense must have a valid date."],
+        required: [true, "Please specify the date for this expense."],
     },
     notes: {
         type: String,
@@ -29,9 +31,17 @@ const expenseSchema = new mongoose.Schema({
     },
     createdAt: {
         type: Date,
-        default: Date.now(),
-        select: false
+        default: Date.now,
+        select: false,
     },
+});
+
+expenseSchema.pre(/^find/, function (next) {
+    this.populate({
+        path: 'user',
+        select: 'name', // Include user name and photo
+    });
+    next();
 });
 
 const Expense = mongoose.model('Expense', expenseSchema);

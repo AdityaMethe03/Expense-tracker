@@ -20,7 +20,7 @@ mongoose
     .catch(err => console.log(err))
 
 // const testExpense = new Expense({
-//     userId: new mongoose.Types.ObjectId(), // Simulating a valid ObjectId
+//     user: new mongoose.Types.ObjectId(), // Simulating a valid ObjectId
 //     type: 'expense',
 //     amount: 1000,
 //     category: 'Travel',
@@ -38,7 +38,7 @@ mongoose
 //     active: true
 // });
 
-// testUser.save().then(doc => {
+// testExpense.save().then(doc => {
 //     console.log(doc);
 // }).catch(err => {
 //     console.log("Error: ", err)
