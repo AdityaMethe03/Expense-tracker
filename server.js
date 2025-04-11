@@ -29,8 +29,8 @@ mongoose
 // })
 
 // const testUser = new User({
-//     name: 'Clark Kent',
-//     email: 'clarkkent@example.com',
+//     name: 'John Doe',
+//     email: 'johndoe@example.com',
 //     password: 'test1234',
 //     passwordConfirm: 'test1234',
 //     role: 'user',
@@ -38,7 +38,7 @@ mongoose
 //     active: true
 // });
 
-// testExpense.save().then(doc => {
+// testUser.save().then(doc => {
 //     console.log(doc);
 // }).catch(err => {
 //     console.log("Error: ", err)
