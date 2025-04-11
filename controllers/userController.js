@@ -11,6 +11,11 @@ exports.createUser = (req, res) => {
     })
 }
 
+exports.getMe = (req, res, next) => {
+    req.params.id = req.user.id;
+    next();
+}
+
 exports.getUser = factory.getOne(User);
 
 //Do NOT update passwords with this!

@@ -12,6 +12,24 @@ router.patch("/resetPassword/:token", authController.resetPassword);
 
 router.use(authController.protect);
 
+
+router.patch("/updateMyPassword",
+    authController.updatePassword
+);
+
+router.get("/me",
+    userController.getMe,
+    userController.getUser
+);
+// router.patch("/updateMe",
+//     // userControllers.uploadUserPhoto,
+//     // userControllers.resizeUserPhoto,
+//     userControllers.updateMe
+// );
+// router.delete("/deleteMe",
+//     userControllers.deleteMe
+// );
+
 router.use(authController.restrictTo('admin'));
 
 router.route("/")

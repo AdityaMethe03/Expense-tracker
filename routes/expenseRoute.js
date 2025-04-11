@@ -4,18 +4,19 @@ const authController = require('../controllers/authController');
 
 const router = express.Router();
 
+router.use(authController.protect);
+
 router.get("/myexpenses",
-    authController.protect,
     expenseController.getMyExpenses
 );
 
 router.route("/")
-    .get(expenseController.getAllExpenses)
-    .post(expenseController.createExpense);
+    .get(authController.restrictTo('admin'), expenseController.getAllExpenses)
+    .post(expenseController.setUserId, expenseController.createExpense);
 
 router.route("/:id")
     .get(expenseController.getExpense)
-    .post(expenseController.updateExpense)
+    .patch(expenseController.updateExpense)
     .delete(expenseController.deleteExpense);
 
 module.exports = router;

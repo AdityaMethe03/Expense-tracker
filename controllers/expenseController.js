@@ -5,6 +5,11 @@ const factory = require('./handlerFactory');
 
 exports.getAllExpenses = factory.getAll(Expense);
 
+exports.setUserId = (req, res, next) => {
+    if (!req.body.user) req.body.user = req.user.id;
+    next();
+};
+
 exports.createExpense = factory.createOne(Expense);
 
 exports.getExpense = factory.getOne(Expense);
