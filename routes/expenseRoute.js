@@ -16,7 +16,7 @@ router.route("/")
 
 router.route("/:id")
     .get(expenseController.getExpense)
-    .patch(expenseController.updateExpense)
-    .delete(expenseController.deleteExpense);
+    .patch(expenseController.checkUser, expenseController.updateExpense)
+    .delete(expenseController.checkUser, expenseController.deleteExpense);
 
 module.exports = router;
