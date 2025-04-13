@@ -45,6 +45,9 @@ const userSchema = new mongoose.Schema({
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,
+    reactivatedAt: Date,
+    reactivationToken: String,
+    reactivationTokenExpires: Date,
     active: {
         type: Boolean,
         default: true,
@@ -75,8 +78,10 @@ userSchema.pre('save', function (next) {
 })
 
 userSchema.pre(/^find/, function (next) {
-    //this point to the current query
-    this.find({ active: { $ne: false } });
+    // Only apply the active filter if "this._skipActiveFilter" is not true
+    if (!this._skipActiveFilter) {
+        this.find({ active: { $ne: false } });
+    }
     next();
 });
 
@@ -105,6 +110,13 @@ userSchema.methods.createPasswordResetToken = function () {
 
     return resetToken;
 }
+
+userSchema.methods.createReactivationToken = function () {
+    const token = crypto.randomBytes(32).toString('hex');
+    this.reactivationToken = crypto.createHash('sha256').update(token).digest('hex');
+    this.reactivationTokenExpires = Date.now() + 10 * 60 * 1000;
+    return token;
+};
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;

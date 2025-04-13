@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require("morgan");
 const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const cookieParser = require('cookie-parser');
@@ -18,6 +19,13 @@ if (process.env.NODE_ENV === 'development') {
     // Morgan is a middleware for logging HTTP requests in Express.js applications. It helps track incoming requests, their status codes, response times, and other information, which can be very useful for debugging and monitoring.
 }
 
+const reactivationLimiter = rateLimit({
+    max: 3, // e.g., allow only 3 attempts
+    windowMs: 60 * 60 * 1000, // per hour
+    message: 'Too many reactivation attempts. Try again later.'
+});
+app.use('/api/v1/users/reactivate', reactivationLimiter);
+
 //Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
@@ -33,10 +41,7 @@ app.use("/api/v1/users", userRouter);
 
 module.exports = app;
 
-// Get expenses
-// Add expenses
-// Delete expenses
-// Edit expenses
+
 // Get monthly expenses
 // Get a year's expense summary
 // Get a month's expense summary

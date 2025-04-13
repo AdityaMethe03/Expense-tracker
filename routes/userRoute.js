@@ -10,6 +10,9 @@ router.get("/logout", authController.logout);
 router.post("/forgotPassword", authController.forgotPassword);
 router.patch("/resetPassword/:token", authController.resetPassword);
 
+router.post('/reactivate-request', userController.sendReactivationLink);
+router.get("/reactivateUser/:token", userController.reactivateUser);
+
 router.use(authController.protect);
 
 
@@ -21,16 +24,19 @@ router.get("/me",
     userController.getMe,
     userController.getUser
 );
-// router.patch("/updateMe",
-//     // userControllers.uploadUserPhoto,
-//     // userControllers.resizeUserPhoto,
-//     userControllers.updateMe
-// );
-// router.delete("/deleteMe",
-//     userControllers.deleteMe
-// );
+
+router.patch("/updateMe",
+    // userControllers.uploadUserPhoto,
+    // userControllers.resizeUserPhoto,
+    userController.updateMe
+);
+
+router.delete("/deleteMe",
+    userController.deleteMe
+);
 
 router.use(authController.restrictTo('admin'));
+
 
 router.route("/")
     .get(userController.getAllUsers)
