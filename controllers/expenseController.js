@@ -2,6 +2,20 @@ const Expense = require('../models/expenseModel');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
 const AppError = require('../utils/appError');
+const APIFeatures = require('../utils/apiFeatures');
+
+// middleware/restrictExpenseAccess.js
+exports.restrictExpenseAccess = catchAsync((req, res, next) => {
+    if (req.user.role !== 'admin') {
+        // Restrict filter to current user's expenses
+        req.filter = { user: req.user._id };
+    } else {
+        // Admin gets full access
+        req.filter = {};
+    }
+
+    next();
+});
 
 exports.getAllExpenses = factory.getAll(Expense);
 
@@ -37,7 +51,16 @@ exports.updateExpense = factory.updateOne(Expense);
 exports.deleteExpense = factory.deleteOne(Expense);
 
 exports.getMyExpenses = catchAsync(async (req, res, next) => {
-    const expenses = await Expense.find({ user: req.user.id });
+
+    const filterUser = { user: req.user.id };
+
+    const features = new APIFeatures(Expense.find(filterUser), req.query)
+        .filter()
+        .sort()
+        .limitFields()
+        .paginate();
+    // const doc = await features.query.explain();
+    const expenses = await features.query;
 
     res.status(200).json({
         status: 'success',
@@ -47,13 +70,3 @@ exports.getMyExpenses = catchAsync(async (req, res, next) => {
         }
     });
 });
-
-// Get expenses
-// Add expenses
-// Delete expenses
-// Edit expenses
-// Get monthly expenses
-// Get a year's expense summary
-// Get a month's expense summary
-// Get a day's expense summary
-// Get total expense summary
