@@ -6,9 +6,9 @@ const router = express.Router();
 
 router.use(authController.protect);
 
-router.get("/myexpenses",
-    expenseController.getMyExpenses
-);
+router.get("/topExpenses", expenseController.aliasTopExpenses, expenseController.getMyExpenses);
+
+router.get("/myexpenses", expenseController.getMyExpenses);
 
 router.route("/")
     .get(authController.restrictTo('admin'), expenseController.getAllExpenses)

@@ -17,6 +17,14 @@ exports.restrictExpenseAccess = catchAsync((req, res, next) => {
     next();
 });
 
+exports.aliasTopExpenses = (req, res, next) => {
+    req.query.limit = '5';
+    req.query.sort = '-amount';
+    req.query.fields = "user,type,amount,category,date,notes";
+    next();
+}
+
+
 exports.getAllExpenses = factory.getAll(Expense);
 
 exports.setUserId = (req, res, next) => {
