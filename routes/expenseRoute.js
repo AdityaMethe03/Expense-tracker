@@ -6,7 +6,13 @@ const router = express.Router();
 
 router.use(authController.protect);
 
-router.get("/topExpenses", expenseController.aliasTopExpenses, expenseController.getMyExpenses);
+router.get("/expense-summary", expenseController.getExpenseSummary);
+
+router.get('/expenses-by-month', expenseController.getExpensesByMonth);
+
+router.get('/expenses-by-time', expenseController.getExpensesByTime);
+
+router.get("/top-5-expenses", expenseController.aliasTopExpenses, expenseController.getMyExpenses);
 
 router.get("/myexpenses", expenseController.getMyExpenses);
 

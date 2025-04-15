@@ -3,6 +3,7 @@ const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
 const AppError = require('../utils/appError');
 const APIFeatures = require('../utils/apiFeatures');
+const mongoose = require('mongoose');
 
 // middleware/restrictExpenseAccess.js
 exports.restrictExpenseAccess = catchAsync((req, res, next) => {
@@ -75,6 +76,120 @@ exports.getMyExpenses = catchAsync(async (req, res, next) => {
         results: expenses.length,
         data: {
             expenses
+        }
+    });
+});
+
+exports.getExpensesByMonth = catchAsync(async (req, res, next) => {
+    const userId = req.user.id;
+    const isAdmin = req.user.role === 'admin';
+
+    const { month, year } = req.query;
+
+    if (!month || !year) {
+        return res.status(400).json({
+            status: 'fail',
+            message: 'Please provide both month and year.'
+        });
+    }
+
+    const startDate = new Date(`${year}-${month.padStart(2, '0')}-01`);
+    const endDate = new Date(startDate);
+    endDate.setMonth(endDate.getMonth() + 1);
+
+    console.log('Start Date:', startDate);
+    console.log('End Date:', endDate);
+
+    const matchQuery = {
+        date: {
+            $gte: startDate,
+            $lt: endDate
+        }
+    };
+
+    if (!isAdmin) {
+        matchQuery.user = userId;
+    }
+
+    const expenses = await Expense.find(matchQuery).sort({ date: 1 });
+
+    res.status(200).json({
+        status: 'success',
+        results: expenses.length,
+        data: {
+            expenses
+        }
+    });
+});
+
+exports.getExpensesByTime = catchAsync(async (req, res, next) => {
+    const userId = req.user.id;
+    const isAdmin = req.user.role === 'admin';
+
+    const matchStage = isAdmin
+        ? {}
+        : { user: new mongoose.Types.ObjectId(userId) };
+
+    // Optional query param: ?by=month OR ?by=year
+    const groupBy = req.query.by === 'year' ? '$year' : '$month';
+
+    const summary = await Expense.aggregate([
+        { $match: matchStage },
+        {
+            $group: {
+                _id: { [groupBy]: '$date' },
+                totalAmount: { $sum: '$amount' },
+                income: {
+                    $sum: {
+                        $cond: [{ $eq: ['$type', 'income'] }, '$amount', 0]
+                    }
+                },
+                expense: {
+                    $sum: {
+                        $cond: [{ $eq: ['$type', 'expense'] }, '$amount', 0]
+                    }
+                },
+                count: { $sum: 1 }
+            }
+        },
+        { $sort: { '_id': 1 } }
+    ]);
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            summary
+        }
+    });
+});
+
+
+exports.getExpenseSummary = catchAsync(async (req, res, next) => {
+    const userId = req.user.id;
+    const isAdmin = req.user.role === 'admin';
+
+    const matchStage = isAdmin
+        ? {} // Get all expenses if admin
+        : { user: new mongoose.Types.ObjectId(userId) };
+
+    const summary = await Expense.aggregate([
+        {
+            $match: matchStage
+        },
+        {
+            $group: {
+                _id: '$type', // Group by 'income' and 'expense'
+                totalAmount: { $sum: '$amount' },
+                averageAmount: { $avg: '$amount' },
+                count: { $sum: 1 }
+            }
+        }
+    ]);
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            summary
         }
     });
 });
