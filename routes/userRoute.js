@@ -15,7 +15,6 @@ router.get("/reactivateUser/:token", userController.reactivateUser);
 
 router.use(authController.protect);
 
-
 router.patch("/updateMyPassword",
     authController.updatePassword
 );

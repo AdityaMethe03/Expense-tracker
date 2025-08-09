@@ -25,7 +25,6 @@ exports.aliasTopExpenses = (req, res, next) => {
     next();
 }
 
-
 exports.getAllExpenses = factory.getAll(Expense);
 
 exports.setUserId = (req, res, next) => {
@@ -163,7 +162,6 @@ exports.getExpensesByTime = catchAsync(async (req, res, next) => {
     });
 });
 
-
 exports.getExpenseSummary = catchAsync(async (req, res, next) => {
     const userId = req.user.id;
     const isAdmin = req.user.role === 'admin';
@@ -190,6 +188,55 @@ exports.getExpenseSummary = catchAsync(async (req, res, next) => {
         status: 'success',
         data: {
             summary
+        }
+    });
+});
+
+exports.getDailyExpensesAverage = catchAsync(async (req, res, next) => {
+    // 1. Get earliest and latest expense date for the user
+    const dates = await Expense.aggregate([
+        {
+            $match: {
+                user: req.user._id,
+                type: 'expense'
+            }
+        },
+        {
+            $group: {
+                _id: null,
+                firstDate: { $min: '$date' },
+                lastDate: { $max: '$date' },
+                totalAmount: { $sum: '$amount' }
+            }
+        }
+    ]);
+
+    if (dates.length === 0) {
+        return res.status(200).json({
+            status: 'success',
+            data: {
+                average: 0,
+                message: 'No expense records found.'
+            }
+        });
+    }
+
+    const { firstDate, lastDate, totalAmount } = dates[0];
+
+    // 2. Calculate total number of days (including days with no expense)
+    const msPerDay = 1000 * 60 * 60 * 24;
+    const dayCount = Math.floor((new Date(lastDate) - new Date(firstDate)) / msPerDay) + 1;
+
+    const average = totalAmount / dayCount;
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            from: firstDate,
+            to: lastDate,
+            totalDays: dayCount,
+            totalExpense: totalAmount,
+            average: Number(average.toFixed(2))
         }
     });
 });

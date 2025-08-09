@@ -8,11 +8,13 @@ router.use(authController.protect);
 
 router.get("/expense-summary", expenseController.getExpenseSummary);
 
+router.get("/top-5-expenses", expenseController.aliasTopExpenses, expenseController.getMyExpenses);
+
+router.get("/daily-expenses-average", expenseController.getDailyExpensesAverage);
+
 router.get('/expenses-by-month', expenseController.getExpensesByMonth);
 
 router.get('/expenses-by-time', expenseController.getExpensesByTime);
-
-router.get("/top-5-expenses", expenseController.aliasTopExpenses, expenseController.getMyExpenses);
 
 router.get("/myexpenses", expenseController.getMyExpenses);
 
