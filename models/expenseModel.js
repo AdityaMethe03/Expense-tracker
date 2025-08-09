@@ -24,7 +24,7 @@ const expenseSchema = new mongoose.Schema({
     date: {
         type: Date,
         default: Date.now(),
-        // required: [true, "Please specify the date for this expense."],
+        required: [true, "Please specify the date for this expense."],
     },
     notes: {
         type: String,
