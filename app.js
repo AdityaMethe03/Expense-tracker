@@ -40,10 +40,3 @@ app.use("/api/v1/expenses", expenseRouter);
 app.use("/api/v1/users", userRouter);
 
 module.exports = app;
-
-
-// Get monthly expenses
-// Get a year's expense summary
-// Get a month's expense summary
-// Get a day's expense summary
-// Get total expense summary

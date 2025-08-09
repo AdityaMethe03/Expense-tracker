@@ -117,12 +117,6 @@ exports.reactivateUser = catchAsync(async (req, res, next) => {
     query._skipActiveFilter = true;
     const user = await query;
 
-    // const user = await User.findOne({
-    //     reactivationToken: hashedToken,
-    //     reactivationTokenExpires: { $gt: Date.now() },
-    //     active: false
-    // });
-
     if (!user) {
         return next(new AppError('Token is invalid or expired.', 400));
     }
