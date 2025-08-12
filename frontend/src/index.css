@@ -1,10 +1,14 @@
 @import "tailwindcss";
 
-@theme(
-  --COLOUR-DARKGRAY
-  --COLOUR-EGG-WHITE
-  --COLOUR-PRIMARY-WHITE
-  --COLOUR-SLATE
+@layer theme {
+  :root {
+    --COLOUR-ALICEBLUE: #f0f8ff;
+    --COLOUR-PRIMARY-WHITE: #ffffff;
+    --COLOUR-PEARL: #fcfcf7;
+    --COLOUR-BRIGHTGRAY: #414345;
+    --COLOUR-DARKGRAY: #232526;
+  }
+}
 
 body {
   padding: 0;

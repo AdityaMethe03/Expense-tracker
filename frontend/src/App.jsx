@@ -1,8 +1,13 @@
+import { Route, Routes } from "react-router-dom";
+import AppLayout from "./pages/AppLayout";
+
 function App() {
   return (
-    <div className="font-bold">
-      Good morning! Welcome to your expense tracker.
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<AppLayout />} />
+      </Routes>
+    </>
   );
 }
 
