@@ -1,13 +1,11 @@
 @import "tailwindcss";
 
-@layer theme {
-  :root {
-    --COLOUR-ALICEBLUE: #f0f8ff;
-    --COLOUR-PRIMARY-WHITE: #ffffff;
-    --COLOUR-PEARL: #fcfcf7;
-    --COLOUR-BRIGHTGRAY: #414345;
-    --COLOUR-DARKGRAY: #232526;
-  }
+@theme {
+  --color-alice-blue: #f0f8ff;
+  --color-pearl: #fcfcf7;
+  --color-bright-gray: #414345;
+  --color-dark-gray: #232526;
+  --color-parachment: #fbf5df;
 }
 
 body {

@@ -3,12 +3,13 @@ import Navbar from "./Navbar";
 
 export default function Homepage() {
   return (
-    <main className="h-[93vh] m-6 font-semibold text-[#f0f8ff] bg-gradient-to-r from-[#414345] to-[#232526]">
+    <main className="h-[93vh] m-6 font-semibold text-alice-blue bg-gradient-to-r from-bright-gray to-dark-gray ">
       <Navbar />
       <section className="@container mx-auto my-16 max-w-6xl flex flex-col gap-8 items-center justify-center text-center">
         <p className="text-4xl font-bold">
           Take control of your{" "}
-          <span className="text-5xl font-extrabold text-white">money</span>.
+          <span className="text-5xl font-extrabold text-white">money</span>
+          .
           <br />
           <span className="text-5xl font-extrabold text-white">
             ExpenseTracker
@@ -22,7 +23,7 @@ export default function Homepage() {
         </p>
         <Link
           to="/signup"
-          className="px-4 py-2 text-lg rounded-lg shadow-lg text-slate-900 bg-[#faf9f6]"
+          className="px-4 py-2 text-lg rounded-lg shadow-lg hover:shadow-inner text-slate-900 bg-pearl hover:bg-parachment"
         >
           Get Started for Free
         </Link>
