@@ -1,6 +1,6 @@
 import Footer from "../components/Footer";
-import Homepage from "../components/Homepage";
-import Navbar from "../components/Navbar";
+import Homepage from "../pages/Homepage";
+// import Navbar from "../components/Navbar";
 
 function AppLayout() {
   return (
