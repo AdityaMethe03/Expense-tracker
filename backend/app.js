@@ -5,11 +5,18 @@ const rateLimit = require('express-rate-limit');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 const expenseRouter = require('./routes/expenseRoute')
 const userRouter = require('./routes/userRoute')
 
 const app = express();
+
+//Enable CORS
+app.use(cors({
+    origin: 'http://localhost:5173', // Your frontend's origin
+    credentials: true
+}));
 
 //Set Security HTTP headers
 app.use(helmet());

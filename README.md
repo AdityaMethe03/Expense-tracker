@@ -1,5 +1,14 @@
 Expense Tracker Project developed for practice.
 
+React.js
+tanstack react query
+tanstack react query devtools
+tailwindcss
+
+Node.js
+Express
+MongoDB
+
 TO DO:
 
 install concurrently library to run both frontend and backend at the same time.
