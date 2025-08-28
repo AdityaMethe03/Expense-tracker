@@ -1,6 +1,7 @@
 import Footer from "../components/Footer";
+import Quote from "../components/Quote";
 import Homepage from "../pages/Homepage";
-// import Navbar from "../components/Navbar";
+import Features from "./Features";
 
 function AppLayout() {
   return (

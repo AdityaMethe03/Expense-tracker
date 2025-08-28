@@ -6,6 +6,7 @@ import AppLayout from "./pages/AppLayout";
 import Login from "./pages/Login";
 import { AuthProvider } from "./contexts/AuthProvider";
 import Dashboard from "./pages/Dashboard";
+import Features from "./pages/Features";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,6 +26,7 @@ function App() {
             <Route path="/" element={<AppLayout />} />
             <Route path="/login" element={<Login />} />
             <Route path="/app" element={<Dashboard />} />
+            <Route path="/features" element={<Features />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>

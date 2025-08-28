@@ -9,10 +9,7 @@ export default function PageNav() {
       </Link>
       <ul className="flex flex-row items-center justify-center gap-10 text-xl">
         <li className="hover:text-parachment">
-          <NavLink to="/home">Home</NavLink>
-        </li>
-        <li className="hover:text-parachment">
-          <NavLink to="/about">About</NavLink>
+          <NavLink to="/">Home</NavLink>
         </li>
         <li className="hover:text-parachment">
           <NavLink to="/features">Features</NavLink>
