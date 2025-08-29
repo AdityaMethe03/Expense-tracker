@@ -1,14 +1,16 @@
 import Footer from "../components/Footer";
-import Quote from "../components/Quote";
 import Homepage from "../pages/Homepage";
-import Features from "./Features";
 
 function AppLayout() {
   return (
-    <>
-      <Homepage />
-      <Footer />
-    </>
+    <div className="flex h-screen bg-background">
+      {/* <AppSidebar /> */}
+      <main className="flex-1 p-8">
+        {/* <AppHeader /> */}
+        {/* The Outlet will render the nested route, e.g., the Dashboard */}
+        <Outlet />
+      </main>
+    </div>
   );
 }
 

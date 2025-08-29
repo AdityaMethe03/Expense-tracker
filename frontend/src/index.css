@@ -1,13 +1,46 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #73d813;
-  --color-accent: #c7c61d;
-  --color-background: #e1ecd2;
-  --color-text-dark: #040607;
-  --color-text-subtle: #a5af97;
-  --color-elements: #53574b;
-  --color-error: #e50001;
+  /* ======================================== */
+  /* BRAND COLORS                */
+  /* Your app's main identity colors.         */
+  /* ======================================== */
+  --color-brand-primary: #73d813;
+  --color-brand-600: #62b911;
+  --color-brand-accent: #c7c61d;
+
+  /* ======================================== */
+  /* BACKGROUND COLORS             */
+  /* For page backgrounds and surfaces.       */
+  /* ======================================== */
+  --color-bg-primary: #e1ecd2;
+  --color-bg-subtle: #fede9e;
+  --color-bg-secondary: #d6d0ff;
+
+  /* ======================================== */
+  /* TEXT COLORS                */
+  /* For all text elements.                   */
+  /* ======================================== */
+  --color-text-primary: #1c1646;
+  --color-text-header: #040607;
+  --color-text-on-brand: #ffffff;
+
+  /* ======================================== */
+  /* FEEDBACK COLORS              */
+  /* For alerts and status indicators.        */
+  /* ======================================== */
+  --color-feedback-error: #e50001;
+  --color-feedback-warning: #fba802;
+  --color-feedback-success: #73d813;
+
+  /* ======================================== */
+  /* ACCENT COLORS                */
+  /* For charts, borders, or other accents.   */
+  /* ======================================== */
+  --color-accent-red: #e13f29;
+  --color-accent-salmon: #fc8f77;
+  --color-ui-gray-100: #a5af97;
+  --color-ui-gray-200: #53574b;
 }
 
 body {
