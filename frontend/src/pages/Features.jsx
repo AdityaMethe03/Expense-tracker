@@ -9,7 +9,7 @@ import {
 function Features() {
   return (
     <section className="container mx-auto py-16 px-6">
-      <div className="text-center mb-12 font-inter">
+      <div className="text-center mb-12">
         <h1 className="text-5xl font-extrabold text-text-header mb-4">
           All The Tools You Need to Succeed
         </h1>
