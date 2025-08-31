@@ -8,12 +8,12 @@ import {
 
 function Features() {
   return (
-    <section className="container mx-auto py-16 px-6">
+    <section className="container mx-auto py-18 px-6">
       <div className="text-center mb-12">
         <h1 className="text-5xl font-extrabold text-text-header mb-4">
           All The Tools You Need to Succeed
         </h1>
-        <p className="text-lg text-text-secondary max-w-3xl mx-auto">
+        <p className="text-lg max-w-3xl mx-auto text-ui-gray-200">
           From automated tracking to intelligent insights, ExpenseTracker is
           designed to give you a complete and effortless overview of your
           financial life.
@@ -26,7 +26,7 @@ function Features() {
           <h3 className="text-xl font-bold text-text-header mb-2">
             Bank Synchronization
           </h3>
-          <p className="text-text-secondary">
+          <p className="text-ui-gray-200">
             Securely connect your bank accounts and credit cards. Your
             transactions are automatically imported and categorized, eliminating
             manual entry forever.
@@ -38,7 +38,7 @@ function Features() {
           <h3 className="text-xl font-bold text-text-header mb-2">
             Budgeting & Forecasts
           </h3>
-          <p className="text-text-secondary">
+          <p className="text-ui-gray-200">
             Create budgets that actually work. We'll help you plan your spending
             for the month ahead and provide forecasts to keep you on track
             towards your goals.
@@ -50,7 +50,7 @@ function Features() {
           <h3 className="text-xl font-bold text-text-header mb-2">
             Automated Recurring Bills
           </h3>
-          <p className="text-text-secondary">
+          <p className="text-ui-gray-200">
             Set up your subscriptions, rent, and other recurring payments once.
             We'll automatically track them for you so you never miss a due date.
           </p>
@@ -61,7 +61,7 @@ function Features() {
           <h3 className="text-xl font-bold text-text-header mb-2">
             Log Expenses via Chat
           </h3>
-          <p className="text-text-secondary">
+          <p className="text-ui-gray-200">
             On the go? Simply send a message to our smart assistant to log an
             expense in seconds. It's as easy as texting a friend.
           </p>
@@ -72,7 +72,7 @@ function Features() {
           <h3 className="text-xl font-bold text-text-header mb-2">
             Bank-Grade Security
           </h3>
-          <p className="text-text-secondary">
+          <p className="text-ui-gray-200">
             Your security is our top priority. We use Plaid for bank connections
             and 256-bit encryption to ensure your data is always safe and
             private.

@@ -11,7 +11,8 @@ export default function Homepage() {
   return (
     <section className="container mx-auto mt-20 mb-44 max-w-6xl flex flex-col gap-8 items-center justify-center text-center cursor-default">
       <p className="text-4xl font-bold">
-        Take control of your <span className="text-5xl">money</span>
+        Take control of your{" "}
+        <span className="text-5xl font-extrabold">money</span>
         .
         <br />
         <span className="text-5xl font-extrabold">ExpenseTracker</span> shows
