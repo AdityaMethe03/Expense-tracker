@@ -36,10 +36,10 @@ function Login() {
   }
 
   return (
-    <section>
+    <section className="my-16">
       <form
         onSubmit={handleSubmit}
-        className="mx-auto my-8 p-10 rounded-lg max-w-lg flex flex-col gap-6 shadow-lg bg-white"
+        className="mx-auto p-10 rounded-lg max-w-lg flex flex-col gap-6 shadow-lg bg-white"
       >
         <h2 className="flex flex-row items-center justify-center gap-1 text-3xl font-bold text-center text-text-header">
           Welcome Back <FaceSmileIcon className="w-8 h-8 text-accent-salmon" />
