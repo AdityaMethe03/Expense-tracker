@@ -31,7 +31,7 @@ export default function Homepage() {
       </div>
       <Link
         to="/login"
-        className="flex flex-row items-center justify-evenly gap-1 px-4 py-2 text-lg rounded-lg shadow-md hover:shadow-xl text-text-on-brand bg-brand-primary"
+        className="flex flex-row items-center justify-evenly gap-1 px-4 py-2 text-lg rounded-lg shadow-md hover:shadow-sm text-text-on-brand bg-brand-primary hover:hover:bg-brand-600 transition-all duration-300"
       >
         Get Started for Free
         <ArrowLongRightIcon className="h-6 w-6" />

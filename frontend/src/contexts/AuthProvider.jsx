@@ -11,6 +11,13 @@ const initialState = {
 
 function reducer(state, action) {
   switch (action.type) {
+    case "register":
+      return {
+        ...state,
+        user: action.payload.user,
+        token: action.payload.token,
+        isAuthenticated: true,
+      };
     case "login":
       return {
         ...state,
@@ -32,6 +39,10 @@ export function AuthProvider({ children }) {
     initialState
   );
 
+  function register(userData) {
+    dispatch({ type: "register", payload: userData });
+  }
+
   function login(userData) {
     dispatch({ type: "login", payload: userData });
   }
@@ -46,6 +57,7 @@ export function AuthProvider({ children }) {
         user,
         isAuthenticated,
         token,
+        register,
         login,
         logout,
       }}

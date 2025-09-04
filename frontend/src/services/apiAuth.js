@@ -20,4 +20,21 @@ export async function login({ email, password }) {
     return data;
 }
 
-// ... your signup function
+export async function register({ name, email, password, passwordConfirm }) {
+    const res = await fetch(`${BASE_URL}/users/signup`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, password, passwordConfirm }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+        // Throws an error that TanStack Query will catch
+        throw new Error(data.message || "Failed to register");
+    }
+
+    return data;
+}
