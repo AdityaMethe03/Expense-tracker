@@ -1,4 +1,4 @@
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Logo from "./Logo";
 
 export default function PageNav() {
@@ -14,6 +14,9 @@ export default function PageNav() {
         </li>
         <li className="hover:text-text-header">
           <NavLink to="/login">Login</NavLink>
+        </li>
+        <li className="hover:text-text-header">
+          <NavLink to="/register">Register</NavLink>
         </li>
       </ul>
     </nav>
