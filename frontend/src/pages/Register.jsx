@@ -13,7 +13,7 @@ function Register() {
   const [email, setEmail] = useState("test@example.com");
   const [password, setPassword] = useState("test1234");
   const [passwordConfirm, setPasswordConfirm] = useState("test1234");
-  const { register: authRegister } = useAuth();
+  const { login: authLogin } = useAuth();
   const navigate = useNavigate();
 
   const {
@@ -23,7 +23,7 @@ function Register() {
   } = useMutation({
     mutationFn: registerApi,
     onSuccess: (data) => {
-      authRegister({ user: data.data.user, token: data.token });
+      authLogin({ user: data.data.user, token: data.token });
       navigate("/app", { replace: true });
     },
     onError: (err) => {
