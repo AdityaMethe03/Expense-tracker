@@ -9,7 +9,7 @@ import {
 } from "@heroicons/react/24/solid";
 
 function Login() {
-  const [email, setEmail] = useState("test@example.com");
+  const [email, setEmail] = useState("test@gmail.com");
   const [password, setPassword] = useState("test1234");
   const { login: authLogin } = useAuth();
   const navigate = useNavigate();

@@ -1,10 +1,14 @@
-/* eslint-disable react-refresh/only-export-components */
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
+import { AuthContext } from "./AuthContext";
+
+// Load initial state from localStorage
+const storedUser = localStorage.getItem("user");
+const storedToken = localStorage.getItem("token");
 
 const initialState = {
-  user: null,
-  isAuthenticated: false,
-  token: null,
+  user: storedUser ? JSON.parse(storedUser) : null,
+  isAuthenticated: !!storedUser && !!storedToken,
+  token: storedToken,
 };
 
 function reducer(state, action) {
@@ -17,7 +21,12 @@ function reducer(state, action) {
         isAuthenticated: true,
       };
     case "logout":
-      return { ...initialState };
+      return {
+        ...state,
+        user: null,
+        isAuthenticated: false,
+        token: null,
+      };
     default:
       throw new Error("Unknown action type");
   }
@@ -29,6 +38,17 @@ export function AuthProvider({ children }) {
     reducer,
     initialState
   );
+
+  // This effect syncs the state TO localStorage
+  useEffect(() => {
+    if (user && token) {
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("token", token);
+    } else {
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+    }
+  }, [user, token]);
 
   function login(userData) {
     dispatch({ type: "login", payload: userData });
