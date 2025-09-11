@@ -38,3 +38,21 @@ export async function register({ name, email, password, passwordConfirm }) {
 
     return data;
 }
+
+export async function logout() {
+    const res = await fetch(`${BASE_URL}/users/logout`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json",
+        }
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+        throw new Error(data.message || "Failed to logout");
+    }
+
+    return data;
+}
