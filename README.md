@@ -4,6 +4,7 @@ React.js
 tanstack react query
 tanstack react query devtools
 tailwindcss
+react-hot-toast
 
 Node.js
 Express
