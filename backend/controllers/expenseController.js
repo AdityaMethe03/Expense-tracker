@@ -48,7 +48,7 @@ exports.checkUser = catchAsync(async (req, res, next) => {
     // console.log(expense.user.id.toString());
     // console.log(req.user.id);
 
-    if (expense.user.id.toString() !== req.user.id) {
+    if (expense.user.id.toString() !== req.user.id && req.user.role !== 'admin') {
         return next(new AppError('You do not have permission to modify this expense', 403));
     }
 
