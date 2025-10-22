@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 import { useAuth } from "../contexts/useAuth";
 import { login as loginApi } from "../services/apiAuth";
+import { getErrorMessage } from "../utils/errorHandler";
 import {
   ArrowRightStartOnRectangleIcon,
   FaceSmileIcon,
@@ -17,21 +19,42 @@ function Login() {
   const {
     mutate: login,
     isPending,
-    error,
   } = useMutation({
     mutationFn: loginApi,
     onSuccess: (data) => {
+      // Show success toast
+      toast.success(`Welcome back, ${data.data.user.name}!`);
+      // Update auth state
       authLogin({ user: data.data.user, token: data.token });
+      // Navigate to dashboard
       navigate("/app", { replace: true });
     },
     onError: (err) => {
+      // Get user-friendly error message
+      const errorMessage = getErrorMessage(err);
+      // Show error toast
+      toast.error(errorMessage);
       console.error("Login failed:", err.message);
     },
   });
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!email || !password) return;
+
+    // Client-side validation
+    if (!email || !password) {
+      toast.error("Please enter both email and password.");
+      return;
+    }
+
+    // Email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
+
+    // Proceed with login
     login({ email, password });
   }
 
@@ -70,12 +93,6 @@ function Login() {
             className="p-3 rounded-md bg-bg-primary border-2 border-transparent focus:outline-none focus:border-brand-primary"
           />
         </div>
-
-        {error && (
-          <p className="text-feedback-error text-center text-sm">
-            {error.message}
-          </p>
-        )}
 
         <div className="flex items-center justify-center mt-3">
           <button
