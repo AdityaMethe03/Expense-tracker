@@ -1,3 +1,5 @@
+// frontend/src/utils/errorHandler.js
+
 /**
  * Maps backend error messages to user-friendly messages
  */
@@ -58,13 +60,20 @@ const errorMessages = {
  * @returns {string} User-friendly error message
  */
 export function getErrorMessage(error) {
-    // If the error is a string
+    // If error is a string
     if (typeof error === "string") {
         return errorMessages[error] || error;
     }
 
-    // If an error is an Error object
+    // If error is an Error object
     const message = error?.message || "An error occurred";
+
+    // Log for debugging (can remove in production)
+    if (import.meta.env.DEV) {
+        console.log("Error object:", error);
+        console.log("Error message:", message);
+        console.log("Error status code:", error?.statusCode);
+    }
 
     // Check if message matches any known error
     for (const [key, value] of Object.entries(errorMessages)) {
@@ -83,12 +92,30 @@ export function getErrorMessage(error) {
         return "This email is already registered.";
     }
 
+    // Handle HTTP status codes if no specific message matched
+    if (error?.statusCode) {
+        switch (error.statusCode) {
+            case 400:
+                return "Invalid request. Please check your input.";
+            case 401:
+                return "Unauthorized.";
+            case 403:
+                return "You don't have permission to perform this action.";
+            case 404:
+                return "Resource not found.";
+            case 500:
+                return "Server error. Please try again later.";
+            default:
+                return message;
+        }
+    }
+
     // Return original message if no match found
     return message;
 }
 
 /**
- * Get an error message and display appropriate icon
+ * Get error message and display appropriate icon
  * @param {Error} error - Error object
  * @returns {object} { message: string, type: 'error' | 'warning' }
  */

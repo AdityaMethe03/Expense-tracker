@@ -1,86 +1,90 @@
 // frontend/src/services/apiClient.js
 
+import axios from "axios";
+
 const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api/v1";
 
-/**
- * Centralized API request handler
- * Automatically adds Authorization header if token exists
- */
-export async function apiRequest(endpoint, options = {}) {
-    // Get token from localStorage
-    const token = localStorage.getItem("token");
-
-    // Build headers
-    const headers = {
+// Create axios instance with the default config
+const apiClient = axios.create({
+    baseURL: BASE_URL,
+    timeout: 10000, // 10-second timeout
+    withCredentials: true, // Send cookies with requests
+    headers: {
         "Content-Type": "application/json",
-        ...options.headers,
-    };
+    },
+});
 
-    // Add Authorization header if token exists
-    if (token) {
-        headers.Authorization = `Bearer ${token}`;
-    }
+// Request interceptor - Add a token to every request
+apiClient.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem("token");
 
-    // Build request config
-    const config = {
-        ...options,
-        headers,
-        credentials: "include", // Still include cookies for backup
-    };
-
-    try {
-        const res = await fetch(`${BASE_URL}${endpoint}`, config);
-
-        // Try to parse JSON response
-        let data;
-        const contentType = res.headers.get("content-type");
-        if (contentType && contentType.includes("application/json")) {
-            data = await res.json();
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
         }
 
-        // If response is not ok, throw error
-        if (!res.ok) {
-            throw new Error(data?.message || `${res.statusText}`);
-        }
-
-        return data;
-    } catch (error) {
-        // Re-throw with better error message
-        throw new Error(error.message || "Network request failed");
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
     }
-}
+);
+
+// Response interceptor - Handle errors globally
+apiClient.interceptors.response.use(
+    (response) => {
+        // Return just the data
+        return response.data;
+    },
+    (error) => {
+        // Handle different error scenarios
+        // console.log("Error:", error);
+
+        if (error.response) {
+            // Server responded with error status
+            const errorMessage = error.response.data?.message || error.message;
+            const statusCode = error.response.status;
+
+            const customError = new Error(errorMessage);
+            customError.statusCode = statusCode;
+            customError.data = error.response.data;
+
+            return Promise.reject(customError);
+        } else if (error.request) {
+            // Request made but no response received
+            console.log("Network Error:", error.request);
+            return Promise.reject(new Error("Network error. Please check your internet connection."));
+        } else {
+            // Something else happened
+            console.log("Error:", error.message);
+            return Promise.reject(new Error(error.message || "An unexpected error occurred."));
+        }
+    }
+);
 
 /**
  * Helper functions for common HTTP methods
  */
 export const api = {
-    get: (endpoint, options = {}) => {
-        return apiRequest(endpoint, {
-            ...options,
-            method: "GET",
-        });
+    get: (url, config = {}) => {
+        return apiClient.get(url, config);
     },
 
-    post: (endpoint, body, options = {}) => {
-        return apiRequest(endpoint, {
-            ...options,
-            method: "POST",
-            body: JSON.stringify(body),
-        });
+    post: (url, data, config = {}) => {
+        return apiClient.post(url, data, config);
     },
 
-    patch: (endpoint, body, options = {}) => {
-        return apiRequest(endpoint, {
-            ...options,
-            method: "PATCH",
-            body: JSON.stringify(body),
-        });
+    patch: (url, data, config = {}) => {
+        return apiClient.patch(url, data, config);
     },
 
-    delete: (endpoint, options = {}) => {
-        return apiRequest(endpoint, {
-            ...options,
-            method: "DELETE",
-        });
+    put: (url, data, config = {}) => {
+        return apiClient.put(url, data, config);
+    },
+
+    delete: (url, config = {}) => {
+        return apiClient.delete(url, config);
     },
 };
+
+export default apiClient;
