@@ -21,7 +21,6 @@ function Register() {
   const {
     mutate: register,
     isPending,
-    error,
   } = useMutation({
     mutationFn: registerApi,
     onSuccess: (data) => {
@@ -39,10 +38,29 @@ function Register() {
   function handleSubmit(e) {
     e.preventDefault();
     console.log({ name, email, password, passwordConfirm });
-    if (
-      !email || !password || !passwordConfirm ||
-      password !== passwordConfirm
-    ) {
+    if(!name || !email || !password || !passwordConfirm)
+    {
+      toast.error("Please fill in all fields.");
+      return;
+    }
+    // Name validation
+    if (name.trim().length < 2) {
+      toast.error("Name must be at least 2 characters long.");
+      return;
+    }
+    // Email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
+    // Password length validation
+    if (password.length < 8) {
+      toast.error("Password must be at least 8 characters long.");
+      return;
+    }
+    // Password match validation - FIXED!
+    if (password !== passwordConfirm) {
       toast.error("Passwords do not match!");
       return;
     }
