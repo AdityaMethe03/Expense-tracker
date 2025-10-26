@@ -5,53 +5,53 @@
  */
 const errorMessages = {
     // Authentication errors
-    "Incorrect email or password": "Invalid email or password. Please try again.",
-    "Please provide email and password!": "Please enter both email and password.",
-    "You are not logged in! Please log in to get access.":
+    "incorrect email or password": "Invalid email or password. Please try again.",
+    "please provide email and password!": "Please enter both email and password.",
+    "you are not logged in! Please log in to get access.":
         "Your session has expired. Please log in again.",
-    "Invalid token. Please log in again": "Your session is invalid. Please log in again.",
-    "Your token has expired! Please log in again.":
+    "invalid token. Please log in again": "Your session is invalid. Please log in again.",
+    "your token has expired! Please log in again.":
         "Your session has expired. Please log in again.",
-    "User recently changed password! Please log in again.":
+    "user recently changed password! Please log in again.":
         "Password was changed recently. Please log in again.",
 
     // Registration errors
-    "Duplicate field value": "This email is already registered. Please use a different email.",
-    "Please confirm your password": "Please confirm your password.",
-    "Passwords are not the same.": "Passwords do not match. Please try again.",
-    "Please provide a valid email.": "Please enter a valid email address.",
-    "Please tell us your name!": "Name is required.",
-    "Please provide your email.": "Email is required.",
-    "Please provide a password.": "Password is required.",
+    "duplicate key error": "This email is already registered. Please use a different email.",
+    "please confirm your password": "Please confirm your password.",
+    "passwords are not the same.": "Passwords do not match. Please try again.",
+    "please provide a valid email.": "Please enter a valid email address.",
+    "please tell us your name!": "Name is required.",
+    "please provide your email.": "Email is required.",
+    "please provide a password.": "Password is required.",
 
     // Expense errors
-    "No expense found with that ID": "Expense not found.",
-    "You do not have permission to modify this expense":
+    "no expense found with that ID": "Expense not found.",
+    "you do not have permission to modify this expense":
         "You don't have permission to modify this expense.",
-    "User is required for the expense.": "Something went wrong. Please try again.",
-    "Expense type is required (income or expense).": "Please select expense type.",
-    "Amount is required for the expense.": "Please enter an amount.",
-    "Amount must be a positive number.": "Amount must be greater than zero.",
-    "Please specify the category for this expense.": "Please select a category.",
-    "Please specify the date for this expense.": "Please select a date.",
+    "user is required for the expense.": "Something went wrong. Please try again.",
+    "expense type is required (income or expense).": "Please select expense type.",
+    "amount is required for the expense.": "Please enter an amount.",
+    "amount must be a positive number.": "Amount must be greater than zero.",
+    "please specify the category for this expense.": "Please select a category.",
+    "please specify the date for this expense.": "Please select a date.",
 
     // User errors
-    "No user with email address": "No account found with this email.",
-    "This route is not for password updates. Please use /updatePassword.":
+    "no user with email address": "No account found with this email.",
+    "this route is not for password updates. Please use /updatePassword.":
         "Please use the 'Change Password' option to update your password.",
-    "You cannot change name or email.": "Name and email cannot be changed.",
-    "Your current password is wrong.": "Current password is incorrect.",
+    "you cannot change name or email.": "Name and email cannot be changed.",
+    "your current password is wrong.": "Current password is incorrect.",
 
     // Permission errors
-    "You do not have permission to perform this action":
+    "you do not have permission to perform this action":
         "You don't have permission to perform this action.",
 
     // Network errors
-    "Failed to fetch": "Network error. Please check your internet connection.",
-    "Network request failed": "Unable to connect to server. Please try again.",
+    "failed to fetch": "Network error. Please check your internet connection.",
+    "network request failed": "Unable to connect to server. Please try again.",
 
     // Generic errors
-    "Something went very wrong!": "An unexpected error occurred. Please try again.",
+    "something went very wrong!": "An unexpected error occurred. Please try again.",
 };
 
 /**
@@ -66,7 +66,9 @@ export function getErrorMessage(error) {
     }
 
     // If error is an Error object
-    const message = error?.message || "An error occurred";
+    const message = error.data || "An error occurred";
+
+    // console.log("Error message:", error.data);
 
     // Log for debugging (can remove in production)
     if (import.meta.env.DEV) {
@@ -77,7 +79,9 @@ export function getErrorMessage(error) {
 
     // Check if message matches any known error
     for (const [key, value] of Object.entries(errorMessages)) {
-        if (message.includes(key)) {
+        console.log(key, value);
+        let errorMessage = message.toLowerCase();
+        if (errorMessage.includes(key)) {
             return value;
         }
     }
