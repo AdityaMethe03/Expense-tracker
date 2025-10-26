@@ -58,12 +58,12 @@ const errorMessages = {
  * @returns {string} User-friendly error message
  */
 export function getErrorMessage(error) {
-    // If error is a string
+    // If the error is a string
     if (typeof error === "string") {
         return errorMessages[error] || error;
     }
 
-    // If error is an Error object
+    // If an error is an Error object
     const message = error?.message || "An error occurred";
 
     // Check if message matches any known error
@@ -88,7 +88,7 @@ export function getErrorMessage(error) {
 }
 
 /**
- * Get error message and display appropriate icon
+ * Get an error message and display appropriate icon
  * @param {Error} error - Error object
  * @returns {object} { message: string, type: 'error' | 'warning' }
  */

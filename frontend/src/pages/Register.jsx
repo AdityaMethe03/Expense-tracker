@@ -7,6 +7,8 @@ import {
   ArrowRightStartOnRectangleIcon,
   FaceSmileIcon,
 } from "@heroicons/react/24/outline";
+import toast from "react-hot-toast";
+import {getErrorMessage} from "../utils/errorHandler.js";
 
 function Register() {
   const [name, setName] = useState("test");
@@ -23,10 +25,13 @@ function Register() {
   } = useMutation({
     mutationFn: registerApi,
     onSuccess: (data) => {
+      toast.success(`Welcome, ${data.data.user.name}!`);
       authLogin({ user: data.data.user, token: data.token });
       navigate("/app", { replace: true });
     },
     onError: (err) => {
+      const errorMessage = getErrorMessage(err);
+      toast.error(errorMessage);
       console.error("Register failed:", err.message);
     },
   });
@@ -35,10 +40,10 @@ function Register() {
     e.preventDefault();
     console.log({ name, email, password, passwordConfirm });
     if (
-      (!email || !password || !passwordConfirm) &&
-      password != passwordConfirm
+      !email || !password || !passwordConfirm ||
+      password !== passwordConfirm
     ) {
-      alert("Passwords do not match!");
+      toast.error("Passwords do not match!");
       return;
     }
     register({ name, email, password, passwordConfirm });
@@ -105,13 +110,6 @@ function Register() {
             className="p-3 rounded-md bg-bg-primary border-2 border-transparent focus:outline-none focus:border-brand-primary"
           />
         </div>
-
-        {error && (
-          <p className="text-feedback-error text-center text-sm">
-            {error.message}
-          </p>
-        )}
-
         <div className="flex items-center justify-center mt-3">
           <button
             disabled={isPending}
