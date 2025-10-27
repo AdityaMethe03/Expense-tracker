@@ -3,6 +3,7 @@ import { useAuth } from "../contexts/useAuth";
 import { logout as logoutApi } from "../services/apiAuth";
 import { useMutation } from "@tanstack/react-query"; // <-- don't forget to import this
 import Logo from "./Logo";
+import toast from "react-hot-toast";
 
 function AppSidebar() {
   const { user, logout: authLogout } = useAuth();
@@ -10,18 +11,18 @@ function AppSidebar() {
 
   const {
     mutate: logout,
-    isPending,
-    error,
+    isPending
   } = useMutation({
     mutationFn: logoutApi,
     onSuccess: () => {
+      toast.success("Logged out successfully!");
       // clear auth state
       authLogout();
-
-      // redirect user to home (or login page)
+      // redirect user home (or login page)
       navigate("/home", { replace: true });
     },
     onError: (err) => {
+      toast.error("Logout failed");
       console.error("Logout failed:", err.message);
     },
   });
@@ -55,19 +56,8 @@ function AppSidebar() {
         >
           Transactions
         </NavLink>
-        <NavLink
-          to="/app/budgets"
-          className={({ isActive }) =>
-            isActive
-              ? "text-text-primary font-bold"
-              : "text-ui-gray-200 hover:text-text-primary"
-          }
-        >
-          Budgets
-        </NavLink>
       </nav>
 
-      {/* User info + logout */}
       <div className="mt-auto">
         <div className="text-ui-gray-200 mb-4">
           <p className="font-bold text-text-primary">{user?.name}</p>
@@ -83,12 +73,6 @@ function AppSidebar() {
         >
           {isPending ? "Logging out..." : "Logout"}
         </button>
-
-        {error && (
-          <p className="text-sm text-red-500 mt-2">
-            {error.message || "Logout failed"}
-          </p>
-        )}
       </div>
     </div>
   );

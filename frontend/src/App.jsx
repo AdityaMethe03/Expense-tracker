@@ -8,6 +8,8 @@ import ProtectedRoute from "./pages/ProtectedRoute";
 import Homepage from "./pages/Homepage";
 import PublicLayout from "./pages/PublicLayout";
 import Register from "./pages/Register";
+import Transactions from "./pages/Transactions.jsx";
+import AddTransaction from "./pages/AddTransaction.jsx";
 
 function App() {
   return (
@@ -30,7 +32,9 @@ function App() {
           }
         >
           <Route index element={<Navigate replace to="dashboard" />} />
-          <Route path="dashboard" element={<Dashboard />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="transactions" element={<Transactions />} />
+            <Route path="transactions/addtransaction" element={<AddTransaction />} />
         </Route>
       </Routes>
     </>

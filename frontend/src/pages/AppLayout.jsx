@@ -6,7 +6,6 @@ function AppLayout() {
     <div className="flex h-screen bg-bg-primary">
       <AppSidebar />
       <main className="flex-1 p-8 overflow-y-auto">
-        {/* The Outlet will render the nested route, e.g., the Dashboard */}
         <Outlet />
       </main>
     </div>
